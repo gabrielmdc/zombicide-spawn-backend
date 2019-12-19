@@ -27,6 +27,7 @@
   "dependencies": {
     "express-graphql": "^0.9.0",
     "graphql": "^14.5.8",
+    "graphql-tools": "^4.0.6",
     "restify": "^7.2.1",
     "restify-errors": "^6.1.1"
   },
