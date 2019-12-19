@@ -9,6 +9,6 @@ VERSION=$(cut -d '.' -f1,2 <<< $PACKAGE_VERSION)
 echo "Docker-Hub login..."
 docker login -u $DOCKER_HUB -p $DOCKER_HUB_KEY &&
 echo "Tagging..." &&
-docker tag zombicide-spawn-backend-backend:$VERSION gmdcwork/zombicide-spawn-backend-backend:$VERSION
+docker tag zombicide-spawn-backend:$VERSION gmdcwork/zombicide-spawn-backend:$VERSION
 echo "Pushing image into Docker-Hub..." &&
-docker push gmdcwork/zombicide-spawn-backend-backend:$VERSION
+docker push gmdcwork/zombicide-spawn-backend:$VERSION
