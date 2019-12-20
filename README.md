@@ -1,9 +1,12 @@
-# my-project backend ![Build status](https://github.com/gabrielmdc/my-project-backend/workflows/Master%20push/badge.svg)
+# Zombicide Black Plague spawn cards - backend ![Build status](https://github.com/gabrielmdc/zombicide-spawn-backend/workflows/Master%20push/badge.svg)
 
-This project is the backend of the project my-project, it saves the historical and configuration of my-project system.
+This project offers an API where you can get all the info about the Zombicide Black Plague spawn cards.
+
+The frontend project is [here](https://github.com/gabrielmdc/zombicide-spawn-frontend)
 
 ## Table of contents:
 
+- [API use](#API%20use)
 - [Requirements](#Requirements)
 - [Installation](#Installation)
 - [Docker image repositories](#Docker%20image%20repositories)
@@ -12,24 +15,80 @@ This project is the backend of the project my-project, it saves the historical a
   - Using _docker-compose_
 - [License](#License)
 
+## API use
+
+This API uses GraphQL.
+[API documentation](https://zombicide-spawn-backend.herokuapp.com/graphql)
+
+### Query examples
+
+Get the card 39 from the Zombicide Black Plague spawn pile:
+
+```graphql
+query {
+  getCard(number: 39) {
+    number
+    type
+    ... on SziCard {
+      levels {
+        red {
+          zombie
+          amount
+        }
+        orange {
+          zombie
+          amount
+        }
+        yellow {
+          zombie
+          amount
+        }
+        blue {
+          zombie
+          amount
+        }
+      }
+    }
+    ... on ActivationCard {
+      levels {
+        red {
+          zombie
+        }
+        orange {
+          zombie
+        }
+        yellow {
+          zombie
+        }
+        blue {
+          zombie
+        }
+      }
+    }
+  }
+}
+```
+
+Get all cards of type _Necromancer_:
+
+```graphql
+query {
+  fetchAllCardsByType(type: "Necromancer") {
+    items {
+      number
+    }
+  }
+}
+```
+
 ## Requirements
 
-You must to set-up some environment variables:
-
-_Mandatory:_
-
-- **DATABASE_URI**: The URI of MongoDb instance
-- **GOOGLE_CLIENT_ID**: This is used for the Google authentication
-- **GOOGLE_CLIENT_SECRET**: This is used for the Google authentication
-- **GOOGLE_REDIR_URL**: This is used for the Google authentication
-- **SECURITY_JWT_SECRET**: This is used to encrypt the JWT Token
+You can set-up some environment variables:
 
 _Optional:_
 
-- **SECURITY_BCRYPT_SALT_ROUNDS**: An integer used for encrypt data
 - **PORT**: The server port
 - **SERVER_NAME**: The server name. By default, the field _name_ from package.json is used
-- **DATABASE_URI_TEST**: The URI of MongoDb instance. Used only for unit testing
 
 For the develop environment, you can add a _nodemon.json_ file which is not tracked by GIT. More info [here](https://github.com/remy/nodemon/blob/master/doc/sample-nodemon.md)
 
@@ -38,11 +97,8 @@ Example (_nodemon.json_):
 ```json nodemon.json
 {
   "env": {
-    "DATABASE_URI": "mongo db url",
-    "GOOGLE_CLIENT_ID": "xxx",
-    "GOOGLE_CLIENT_SECRET": "xxx",
-    "GOOGLE_REDIR_URL": "redir url",
-    "SECURITY_JWT_SECRET": "xxx"
+    "PORT": "8080",
+    "SERVER_NAME": "server_name"
   }
 }
 ```
@@ -52,21 +108,16 @@ Example (_nodemon.json_):
 There are some official [repositories](#Docker%20image%20repositories).
 
 ```bash
-docker pull gmdcwork/my-project-backend:[version]
+docker pull gmdcwork/zombicide-spawn-backend:[version]
 # Please set the correct variable values
-docker run --name my-project-backend-instance \
-  -e DATABASE_URI='mongodb://mongo/my-backend' \
-  -e GOOGLE_CLIENT_ID="" \
-  -e GOOGLE_CLIENT_SECRET="" \
-  -e GOOGLE_REDIR_URL="" \
-  -e SECURITY_JWT_SECRET="" \
-  -d my-project-backend:[version]
+docker run --name zombicide-spawn-backend-instance \
+  -d zombicide-spawn-backend:[version]
 ```
 
 ## Installation
 
 ```bash
-yarn install
+yarn
 ```
 
 ## Run
@@ -81,7 +132,20 @@ The command `yarn start` is similar but it does not set the environment variable
 
 ## Build Docker container
 
+You can use an [official docker image](#Docker%20image%20repositories) Docker image repositories:
+
+```bash
+yarn build
+```
+
+Now you could run a container. [Example explained](#Using%20the%20Docker%20image)
+
 ## Docker image repositories
+
+There are two repositories:
+
+- [Git package registry](https://github.com/gabrielmdc/zombicide-spawn-backend/packages)
+- [DockerHub](https://hub.docker.com/r/gmdcwork/zombicide-spawn-backend)
 
 ## Credits
 
