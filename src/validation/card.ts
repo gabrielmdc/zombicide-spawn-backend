@@ -14,7 +14,7 @@ export function validateNumber(number: number) {
 export async function validateType(type: CardType) {
   const validType = type in CardType;
   if (!validType) {
-    const err = createError('The sensor must have a valid sensor type');
+    const err = createError('Invalid card type');
     throw err;
   }
   return type;
