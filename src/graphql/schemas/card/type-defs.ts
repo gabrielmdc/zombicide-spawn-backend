@@ -9,6 +9,10 @@ type SziLevel {
   amount: Int!
 }
 
+type ActivationLevel {
+  zombie: String!
+}
+
 type SziLevels {
   red: SziLevel
   orange: SziLevel
@@ -17,10 +21,10 @@ type SziLevels {
 }
 
 type ActivationLevels {
-  red: String
-  orange: String
-  yellow: String
-  blue: String
+  red: ActivationLevel
+  orange: ActivationLevel
+  yellow: ActivationLevel
+  blue: ActivationLevel
 }
 
 type SziCard implements Card {
