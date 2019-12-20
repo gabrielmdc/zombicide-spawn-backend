@@ -35,6 +35,9 @@ export class CardJsonRepository implements CardRepository {
 
   async fetchAllByType(type: CardType, paginationRequest?: PaginationRequest) {
     const paginationReq = paginationRequest || defaultPagination;
+    if (!paginationReq.page) {
+      paginationReq.page = 1;
+    }
     const cards = <Card[]>sources[type];
     const pagLimit =
       paginationReq.limit > cards.length ? cards.length : paginationReq.limit;
